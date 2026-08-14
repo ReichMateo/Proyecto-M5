@@ -18,7 +18,7 @@ export async function createRepository(
     const response = await octokit.rest.repos.createForAuthenticatedUser({
         name: input.name,
         description: input.description,
-        private: input.isprivate,
+        private: input.isPrivate,
     });
 
     return {
@@ -77,4 +77,43 @@ export async function listIssues(
         url: issue.html_url,
         state: issue.state,
     }));
+}
+export async function createCommit(
+    input: CreateCommitInput
+): Promise<CommitResult> {
+    let sha: string | undefined;
+
+    try {
+        const existing = await octokit.rest.repos.getContent({
+            owner: input.owner,
+            repo: input.repo,
+            path: input.path,
+            ref: input.branch,
+        });
+
+        if (!Array.isArray(existing.data) && existing.data.type === "file") {
+            sha = existing.data.sha;
+        }
+    } catch (error: any) {
+        if (error.status !== 404) {
+            throw error; // si es otro error (no "no encontrado"), lo dejamos propagar
+        }
+        // 404 = el archivo no existe todavía, está bien, seguimos sin sha
+    }
+
+    const response = await octokit.rest.repos.createOrUpdateFileContents({
+        owner: input.owner,
+        repo: input.repo,
+        path: input.path,
+        message: input.message,
+        content: Buffer.from(input.content).toString("base64"),
+        branch: input.branch,
+        sha,
+    });
+
+    return {
+        sha: response.data.commit.sha ?? "",
+        message: input.message,
+        url: response.data.commit.html_url ?? "",
+    };
 }

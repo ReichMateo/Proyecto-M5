@@ -14,7 +14,7 @@ export const createRepositorySchema = z.object({
         .string()
         .optional()
         .describe("Descripcion breve del proposito del repositorio"),
-    isprivate: z
+    isPrivate: z
         .boolean()
         .optional()
         .default(false)
