@@ -79,3 +79,13 @@ export const createCommitSchema = z.object({
 });
 
 export type CreateCommitInput = z.infer<typeof createCommitSchema>;
+export const listIssuesSchema = z.object({
+    ...ownerRepoSchema,
+    state: z
+        .enum(["open", "closed", "all"])
+        .optional()
+        .default("open")
+        .describe("Estado de los issues a listar"),
+});
+
+export type listIssuesSchema = z.infer<typeof listIssuesSchema>;
