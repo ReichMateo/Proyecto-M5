@@ -9,7 +9,7 @@ export interface RepositoryResult {
 }
 
 // Resultado limpio despues de crear/listar un issue
-export interface IssueeResult {
+export interface IssueResult {
     number: number;
     title: string;
     url: string;

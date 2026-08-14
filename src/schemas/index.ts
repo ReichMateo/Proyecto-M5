@@ -21,7 +21,7 @@ export const createRepositorySchema = z.object({
         .describe("Si el repositorio debe ser privado. Por defecto es publico")
 });
 
-export type createRepositorySchema = z.infer<typeof createRepositorySchema>;
+export type CreateRepositoryInput = z.infer<typeof createRepositorySchema>;
 
 const ownerRepoSchema = {
     owner: z
@@ -89,4 +89,6 @@ export const listIssuesSchema = z.object({
         .describe("Estado de los issues a listar"),
 });
 
-export type listIssuesSchema = z.infer<typeof listIssuesSchema>;
+export type ListIssuesInput = z.infer<typeof listIssuesSchema>;
+
+export type ListRepositoriesInput = z.infer<typeof listRepositoriesSchema>;
