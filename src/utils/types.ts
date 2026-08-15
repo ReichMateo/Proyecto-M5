@@ -25,7 +25,7 @@ export interface CommitResult {
 
 // Forma estandar que va a devolver CADA tool al LLM
 export interface ToolResponse {
-    succes: boolean;
+    success: boolean;
     message: string;
     data?: unknown;
 }
