@@ -28,11 +28,11 @@ export async function withRetry<T>(
             lastError = error;
 
             if (!isRateLimitError(error)) {
-                throw error; // no es rate limit no tiene sentido reintentar
+                throw error;
             }
 
             if (attempt === maxAttempts) {
-                break; // se acabaron los intentos, salimos del loop
+                break;
             }
             const delay = initialDelayMs * Math.pow(2, attempt - 1);
             logger.warn(`Rate limit alcanzado, reintentando en ${delay}ms`, {

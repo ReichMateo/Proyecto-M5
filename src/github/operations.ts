@@ -96,9 +96,8 @@ export async function createCommit(
         }
     } catch (error: any) {
         if (error.status !== 404) {
-            throw error; // si es otro error (no "no encontrado"), lo dejamos propagar
+            throw error;
         }
-        // 404 = el archivo no existe todavía, está bien, seguimos sin sha
     }
 
     const response = await octokit.rest.repos.createOrUpdateFileContents({

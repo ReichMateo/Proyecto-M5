@@ -1,4 +1,3 @@
-// Error base del que heredan los demas
 export class AppError extends Error {
     constructor(message: string) {
         super(message);
@@ -6,14 +5,12 @@ export class AppError extends Error {
     }
 }
 
-//cuando un input no pasa la validacion de zod
 export class ValidationError extends AppError {
     constructor(message: string) {
         super(message)
     }
 }
 
-//cuando github responde con un error (404, 422, etc...)
 export class GitHubAPIError extends AppError {
     statusCode: number;
 
@@ -23,14 +20,12 @@ export class GitHubAPIError extends AppError {
     }
 }
 
-//cuando el token es invalido o no tiene permisos (401/403)
 export class AuthenticationError extends AppError {
     constructor(message: string) {
         super(message);
     }
 }
 
-//cuando falla la conexion (sin internet, timeout, etc.)
 export class NetworkError extends AppError {
     constructor(message: string) {
         super(message);
@@ -59,6 +54,5 @@ export function toUserMessage(error: unknown): string {
         return "Hubo un problema de conexión con GitHub. Intentá de nuevo en unos segundos.";
     }
 
-    // Fallback para cualquier error no anticipado
     return "Ocurrió un error inesperado. Intentá de nuevo.";
 }
